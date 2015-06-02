@@ -1,0 +1,48 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  RewriteCond %{REQUEST_URI} ^system.*
+  RewriteRule ^(.*)$ /index.php?/$1 [NC,L,QSA]
+ 
+  RewriteCond %{REQUEST_URI} ^application.*
+  RewriteRule ^(.*)$ /index.php?/$1 [NC,L,QSA]
+ 
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^(.*)$ /appcaja/index.php?/$1 [NC,L,QSA]
+  Header set X-UA-Compatible "IE=edge"
+</IfModule>
+ 
+<IfModule !mod_rewrite.c>
+  ErrorDocument 404 /index.php
+</IfModule>
+
+FileETag none
+
+<IfModule mod_expires.c>
+
+# Enable expirations
+ExpiresActive On
+
+# Default directive
+#ExpiresDefault "access plus 1 year"
+
+# My favicon
+ExpiresByType image/x-icon "access plus 1 year"
+
+# Images
+ExpiresByType image/gif "access plus 1 year"
+ExpiresByType image/png "access plus 1 year"
+ExpiresByType image/jpg "access plus 1 year"
+ExpiresByType image/jpeg "access plus 1 year"
+
+# CSS
+ExpiresByType text/css "access 1 year"
+
+# Javascript
+ExpiresByType application/javascript "access plus 1 year"
+
+</IfModule>
+
+

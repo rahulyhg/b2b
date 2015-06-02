@@ -1,0 +1,62 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  RewriteCond %{REQUEST_URI} ^system.*
+  RewriteRule ^(.*)$ /index.php?/$1 [NC,L,QSA]
+ 
+  RewriteCond %{REQUEST_URI} ^application.*
+  RewriteRule ^(.*)$ /index.php?/$1 [NC,L,QSA]
+ 
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^(.*)$ index.php?/$1 [NC,L,QSA]
+</IfModule>
+ 
+<IfModule !mod_rewrite.c>
+  ErrorDocument 404 /index.php
+</IfModule>
+
+FileETag none
+<IfModule mod_deflate.c>
+	#The following line is enough for .js and .css
+	AddOutputFilter DEFLATE js css
+
+	#The following line also enables compression by file content type, for the following list of Content-Type:
+	AddOutputFilterByType DEFLATE text/html text/plain text/xml application/xml
+
+	#The following lines are to avoid bugs with some browsers
+	BrowserMatch ^Mozilla/4 gzip-only-text/html
+	BrowserMatch ^Mozilla/4\.0[678] no-gzip
+	BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+</IfModule>
+
+<IfModule mod_headers.c>
+	<FilesMatch "\.(js|css|xml|gz)$">
+		Header append Vary: Accept-Encoding
+	</FilesMatch>
+</IfModule>
+<IfModule mod_expires.c>
+
+	# Enable expirations
+	ExpiresActive On
+
+	# Default directive
+	ExpiresDefault "access plus 1 month"
+
+	# My favicon
+	ExpiresByType image/x-icon "access plus 1 year”
+
+	# Images
+	ExpiresByType image/gif "access plus 1 month"
+	ExpiresByType image/png "access plus 1 month"
+	ExpiresByType image/jpg "access plus 1 month"
+	ExpiresByType image/jpeg "access plus 1 month"
+
+	# CSS
+	ExpiresByType text/css "access 1 month”
+
+	# Javascript
+	ExpiresByType application/javascript "access plus 1 year"
+
+</IfModule>

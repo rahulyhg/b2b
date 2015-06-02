@@ -1,0 +1,15 @@
+DELIMITER $$
+DROP PROCEDURE IF EXISTS PERFIL_GET$$
+
+CREATE PROCEDURE `PERFIL_GET`(
+ IN P_PerfilId VARCHAR(64)
+)
+BEGIN
+SELECT 	P.PerfilId, 
+		P.NombrePerfil, 
+		P.PerfilPadreId, 
+		T.c_tipo AS Estado
+FROM 	MPC_TM_PERFIL P
+INNER JOIN TIPO T
+WHERE P.Estado = 'COD0000002' AND T.c_tipo = 'Activo';
+END$$
